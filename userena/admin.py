@@ -28,4 +28,8 @@ if userena_settings.USERENA_REGISTER_USER:
     admin.site.register(get_user_model(), UserenaAdmin)
     
 if userena_settings.USERENA_REGISTER_PROFILE:    
-    admin.site.register(get_profile_model(), GuardedModelAdmin)
+    #admin.site.register(get_profile_model(), GuardedModelAdmin)
+    # patch to prevent double registering
+    the_profile = get_profile_model()
+    admin.site.unregister(the_profile)
+    admin.site.register(the_profile, GuardedModelAdmin)
